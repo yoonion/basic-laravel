@@ -38,7 +38,7 @@ Route::post('/articles', function (Request $request) {
     ]);
 
     // Eloquent ORM 사용
-    Article::created([
+    Article::create([
         'text' => $input['text'],
         'user_id' => Auth::id()
     ]);
