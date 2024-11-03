@@ -37,37 +37,11 @@ Route::post('/articles', function (Request $request) {
         ],
     ]);
 
-//    $host = config('database.connections.mysql.host');
-//    $dbname = config('database.connections.mysql.database');
-//    $username = config('database.connections.mysql.username');
-//    $password = config('database.connections.mysql.password');
-//
-//    // pdo 객체를 만든다
-//    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-//
-//    // 쿼리 준비
-//    $stmt = $conn->prepare("INSERT INTO articles (text, user_id) VALUES (:body, :userId)");
-//
-//    // 쿼리 값 설정
-//    $stmt->bindValue(':text', $input['text']);
-//    $stmt->bindValue(':userId', Auth::id());
-//
-//    // 실행
-//    $stmt->execute();
-
-//    DB::statement("INSERT INTO articles (text, user_id) VALUES (:text, :userId)", ['text' => $input['text'], 'userId' => Auth::id()]);
-
-    // 쿼리 빌더
-//    DB::table('articles')->insert([
-//        'text' => $input['text'],
-//        'user_id' => Auth::id()
-//    ]);
-
     // Eloquent ORM 사용
-    $article = new Article;
-    $article->text = $input['text'];
-    $article->user_id = Auth::id();
-    $article->save();
+    Article::created([
+        'text' => $input['text'],
+        'user_id' => Auth::id()
+    ]);
 
     return 'hello';
 });
