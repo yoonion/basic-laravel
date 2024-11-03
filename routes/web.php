@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,10 +58,16 @@ Route::post('/articles', function (Request $request) {
 //    DB::statement("INSERT INTO articles (text, user_id) VALUES (:text, :userId)", ['text' => $input['text'], 'userId' => Auth::id()]);
 
     // 쿼리 빌더
-    DB::table('articles')->insert([
-        'text' => $input['text'],
-        'user_id' => Auth::id()
-    ]);
+//    DB::table('articles')->insert([
+//        'text' => $input['text'],
+//        'user_id' => Auth::id()
+//    ]);
+
+    // Eloquent ORM 사용
+    $article = new Article;
+    $article->text = $input['text'];
+    $article->user_id = Auth::id();
+    $article->save();
 
     return 'hello';
 });
