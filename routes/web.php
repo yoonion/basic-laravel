@@ -23,10 +23,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+/**
+ * 글 저장 page
+ */
 Route::get('/articles/create', function () {
     return view('articles/create');
 });
 
+/**
+ * 글 저장
+ */
 Route::post('/articles', function (Request $request) {
     // 비어있지 않고, 문자열이며, 255자를 넘지 않도록.
     $input = $request->validate([
@@ -44,4 +50,12 @@ Route::post('/articles', function (Request $request) {
     ]);
 
     return 'hello';
+});
+
+/**
+ * 글 목록 page
+ */
+Route::get('articles', function () {
+    $articles = Article::all();
+    return view('articles.index', ['articles' => $articles]);
 });
