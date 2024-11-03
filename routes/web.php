@@ -27,7 +27,7 @@ Route::get('/articles/create', function () {
 Route::post('/articles', function (Request $request) {
     // 비어있지 않고, 문자열이며, 255자를 넘지 않도록.
     $request->validate([
-        'body' => [
+        'text' => [
             'required',
             'string',
             'max:255'
