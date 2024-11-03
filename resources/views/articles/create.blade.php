@@ -11,7 +11,7 @@
         <h1 class="text-2xl">글쓰기</h1>
         <form action="/articles" method="post" class="mt-5">
             @csrf
-            <input type="text" class="block w-full mb-2 rounded" name="text">
+            <input type="text" class="block w-full mb-2 rounded" name="text" value="{{ old('text') }}">
             @error('text')
                 <p class="text-xs text-red-500 my-3">{{ $message }}</p>
             @enderror
