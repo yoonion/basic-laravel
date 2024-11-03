@@ -54,7 +54,13 @@ Route::post('/articles', function (Request $request) {
 //    // 실행
 //    $stmt->execute();
 
-    DB::statement("INSERT INTO articles (text, user_id) VALUES (:body, :userId)", ['text' => $input['text'], 'userId' => Auth::id()]);
+//    DB::statement("INSERT INTO articles (text, user_id) VALUES (:text, :userId)", ['text' => $input['text'], 'userId' => Auth::id()]);
+
+    // 쿼리 빌더
+    DB::table('articles')->insert([
+        'text' => $input['text'],
+        'user_id' => Auth::id()
+    ]);
 
     return 'hello';
 });
