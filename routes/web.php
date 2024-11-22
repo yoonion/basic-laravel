@@ -55,7 +55,25 @@ Route::post('/articles', function (Request $request) {
 /**
  * 글 목록 page
  */
-Route::get('articles', function () {
-    $articles = Article::all();
-    return view('articles.index', ['articles' => $articles]);
+Route::get('articles', function (Request $request) {
+    $page = $request->input('page', 1);
+    $perPage = $request->input('per_page', 2);
+    $skip = ($page - 1) * $perPage;
+
+    $articles = Article::select('text', 'created_at')
+        ->skip($skip)
+        ->take($perPage)
+        ->latest()
+        ->get();
+
+    $totalCount = Article::count();
+    return view(
+        'articles.index',
+        [
+            'articles' => $articles,
+            'totalCount' => $totalCount,
+            'page' => $page,
+            'perPage' => $perPage
+        ]
+    );
 });
